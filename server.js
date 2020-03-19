@@ -73,6 +73,7 @@ var server = http.createServer(function(request, response){
             let {email, password, password_confirmation} = hash
             if(email.indexOf('@') === -1){
                 response.statusCode = 400
+                // 设置返回的格式，这样jQuery就可以自动识别了
                 response.setHeader('Content-Type', 'application/json;charset=utf-8')
                 // 我们返回JSON数据，这样就可以实现选择性展示出错误信息，最外端的''不属于JSON，只表示是一个字符串
                 // JS可以理解JSON语法
@@ -150,7 +151,7 @@ var server = http.createServer(function(request, response){
             }
             console.log(found)
             if(found){
-                // 设置cookie
+                // 设置cookie，其中HttpOnly就不允许用户使用JS更改cookie了
                 response.setHeader('Set-Cookie', `sign_in_email=${email}; HttpOnly`)
                 response.statusCode = 200
             }else{
