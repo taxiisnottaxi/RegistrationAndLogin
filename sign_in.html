@@ -74,9 +74,14 @@
             $.post('/sign_in', hash)
 
                 .then((response)=>{
-                    window.location.href = '/'
+                    // sessionId存入localStorage中
+                    let object = JSON.parse(response)
+                    localStorage.setItem('sessionId', object.sessionId)
+                    // 跳转的时候将参数写到查询参数里
+                    window.location.href = `/?sessionId=${object.sessionId}`
                 }, (request)=>{
                     alert('邮箱与密码不匹配')
+                    
                 })
                 
         })
